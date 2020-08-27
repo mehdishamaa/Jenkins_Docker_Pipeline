@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: mongo
+    restart: always
+    ports: [27017:27017]
+#    volumes:
+#      - 'db:/data/db'
+
+  web:
+    build: ./app
+    restart: always
+    ports: [3000:3000]
+    environment:
+      - DB_HOST=mongodb://db:27017/posts
+    depends_on:
+      - db
+ #   volumes:
+#      - '.:/app'
+#volumes:
+ # db: {}
+
+
+# even though you expose the ports in the app, you must also expose it on the docker compose file
+# We can build contaienrs from images or docker files
